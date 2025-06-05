@@ -1,16 +1,15 @@
 import { computed, ref, readonly } from 'vue'
 import type { Week } from '@/types'
 import { useFetch } from '@/composables/useFetch'
-
-const API_BASE_URL = 'http://localhost:3000'
-
-// Singleton - Shared state
-export const weeks = ref<Week[]>([])
-const weekIsLoading = ref(false)
-const weekError = ref<string | null>(null)
+import { defineStore } from 'pinia'
 
 // Factory
-export function useWeekStore() {
+export const useWeekStore = defineStore('weekStore', () => {
+  // State
+  const weeks = ref<Week[]>([])
+  const weekIsLoading = ref(false)
+  const weekError = ref<string | null>(null)
+
   // Getters
   const numberOfWeeks = computed(() => {
     return weeks.value.length
@@ -37,17 +36,21 @@ export function useWeekStore() {
 
   return {
     // State
-    weekIsLoading: readonly(weekIsLoading),
-    weekError: readonly(weekError),
+    weeks,
+    weekIsLoading,
+    weekError,
     // Getters
     numberOfWeeks,
     // Actions
     fetchWeeks,
   }
-}
+})
 
-// Factory - Generated unique state
-export function generateWeeks() {
+/**
+ *  Factory - Generated unique state
+export
+ * */
+function generateWeeks() {
   const newWeeks = ref<Week[]>([])
 
   return newWeeks
