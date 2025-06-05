@@ -7,7 +7,7 @@ import WeekFormModal from '@/components/WeekFormModal.vue'
 import DeleteConfirmModal from '@/components/DeleteConfirmModal.vue'
 import type { Task, Week } from '@/types'
 import NewPlannerCardBody from '@/components/NewPlannerCardBody.vue'
-import { weeks } from '@/composables/useWeek'
+import { weeks, useWeekStore } from '@/composables/useWeek'
 import { formatDateRange } from '@/utils/datetime'
 
 // Router setup
@@ -15,6 +15,7 @@ const router = useRouter()
 
 // Use centralized task store
 const taskStore = useTaskStore()
+const weekStore = useWeekStore()
 
 // API base URL for week operations
 const API_BASE_URL = 'http://localhost:3000'
@@ -22,30 +23,6 @@ const API_BASE_URL = 'http://localhost:3000'
 // Week management logic (simple local state without caching)
 const weekIsLoading = ref(false)
 const weekError = ref<string | null>(null)
-
-// Week actions
-const fetchWeeks = async () => {
-  weekIsLoading.value = true
-  weekError.value = null
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/weeks`)
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
-    const fetchedWeeks: Week[] = await response.json()
-    weeks.value = fetchedWeeks
-
-    return fetchedWeeks
-  } catch (err) {
-    weekError.value = err instanceof Error ? err.message : 'Failed to fetch weeks'
-    console.error('Error fetching weeks:', err)
-    throw err
-  } finally {
-    weekIsLoading.value = false
-  }
-}
 
 // Modal references
 const weekFormModal = ref()
@@ -97,7 +74,7 @@ const openDeleteWeekModal = () => {
 }
 
 const handleWeekCreated = async () => {
-  await fetchWeeks() // Refresh weeks from backend
+  await weekStore.fetchWeeks() // Refresh weeks from backend
 
   // If no week is currently selected, select the newly created week
   if (!selectedWeekId.value && weeks.value.length > 0) {
@@ -110,7 +87,7 @@ const handleWeekCreated = async () => {
 }
 
 const handleWeekUpdated = async () => {
-  await fetchWeeks() // Refresh weeks from backend
+  await weekStore.fetchWeeks() // Refresh weeks from backend
 }
 
 const handleDeleteConfirm = async () => {
@@ -143,7 +120,7 @@ const formatTime = (minutes: number) => {
 
 // Initialize data on component mount
 onMounted(async () => {
-  await Promise.all([taskStore.fetchTasks(), fetchWeeks()])
+  await Promise.all([taskStore.fetchTasks(), weekStore.fetchWeeks()])
 })
 
 // Selected week state

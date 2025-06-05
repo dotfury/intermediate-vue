@@ -1,5 +1,6 @@
 import { computed, ref, readonly } from 'vue'
 import type { Week } from '@/types'
+import { useFetch } from '@/composables/useFetch'
 
 const API_BASE_URL = 'http://localhost:3000'
 
@@ -21,15 +22,10 @@ export function useWeekStore() {
     weekError.value = null
 
     try {
-      const response = await fetch(`${API_BASE_URL}/weeks`)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      const response = await useFetch('/weeks')
+      weeks.value = response
 
-      const fetchedWeeks: Week[] = await response.json()
-      weeks.value = fetchedWeeks
-
-      return fetchedWeeks
+      return response
     } catch (err) {
       weekError.value = err instanceof Error ? err.message : 'Failed to fetch weeks'
       console.error('Error fetching weeks:', err)
