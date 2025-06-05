@@ -170,9 +170,11 @@ const searchTerm = ref('')
 // Expandable time entries state
 const expandedTimeEntries = ref<Set<string>>(new Set())
 
+const newTaskStore = ref<Task[]>([])
+
 // Filter tasks using inline method
 const filteredTasks = computed(() => {
-  return filterTasks(taskStore.tasks, {
+  return filterTasks(newTaskStore, {
     weekId: selectedWeek.value === 'all' ? undefined : selectedWeek.value,
     status: selectedStatus.value as TaskStatus | 'all',
     area: selectedArea.value as TaskArea | 'all',

@@ -1,6 +1,17 @@
 import type { Task, TaskFilters } from '@/types'
+import type { MaybeRefOrGetter } from 'vue'
+import { ref, toValue } from 'vue'
 
-export function filterTasks(taskList: Task[], filters: TaskFilters): Task[] {
+export function filterTasks(
+  taskList: MaybeRefOrGetter<Task[]>,
+  filters: MaybeRefOrGetter<TaskFilters>,
+): Task[] {
+  // Always forces an unwrapped value
+  const tasks = toValue(taskList)
+
+  // Always forces a reactive value
+  const reactiveTasks = ref(taskList)
+
   return taskList.filter((task) => {
     // Week filter
     if (filters.weekId && filters.weekId !== 'all' && task.weekId !== filters.weekId) {
