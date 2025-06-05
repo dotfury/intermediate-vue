@@ -7,6 +7,7 @@ import { useTimeEntryStore } from '@/stores/timeEntryStore'
 import DeleteConfirmModal from '@/components/DeleteConfirmModal.vue'
 import TimeEntryFormModal from '@/components/TimeEntryFormModal.vue'
 import type { Task, Week, TaskStatus, TaskArea, TimeEntry } from '@/types'
+import { weeks } from '@/composables/useWeek'
 
 // Router setup
 const route = useRoute()
@@ -39,7 +40,6 @@ const updateTaskStatus = (taskId: string, status: TaskStatus) =>
   taskStore.updateTaskStatus(taskId, status)
 
 // Week management logic (simple local state without caching)
-const weeks = ref<Week[]>([])
 const weekIsLoading = ref(false)
 const weekError = ref<string | null>(null)
 

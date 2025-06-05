@@ -71,7 +71,7 @@ const updateTask = async (taskId: string, updates: Partial<Omit<Task, 'id' | 'cr
 }
 
 // Week management logic (simple local state without caching)
-const weeks = ref<Week[]>([])
+
 const weekIsLoading = ref(false)
 const weekError = ref<string | null>(null)
 

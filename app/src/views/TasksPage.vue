@@ -13,6 +13,8 @@ import { useTimeEntryStore } from '@/stores/timeEntryStore'
 import type { Task, TaskStatus, TaskArea, TimeEntry, Week } from '@/types'
 import type { RouterLink } from 'vue-router'
 
+import { weeks } from '@/composables/useWeek'
+
 // API base URL
 const API_BASE_URL = 'http://localhost:3000'
 
@@ -21,7 +23,6 @@ const taskStore = useTaskStore()
 const timeEntryStore = useTimeEntryStore()
 
 // Week state
-const weeks = ref<Week[]>([])
 const weekIsLoading = ref(false)
 const weekError = ref<string | null>(null)
 

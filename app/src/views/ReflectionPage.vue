@@ -5,6 +5,7 @@ import { Icon } from '@iconify/vue'
 import { useTimeEntryStore } from '../stores/timeEntryStore'
 import { useTaskStore } from '../stores/taskStore'
 import type { Task, Week, TimeEntry } from '../types'
+import { weeks } from '@/composables/useWeek'
 
 // Use the time entries store
 const timeEntryStore = useTimeEntryStore()
@@ -29,7 +30,6 @@ const getTasksByWeek = (weekId: string): Task[] => {
 }
 
 // Week management logic (simple local state without caching)
-const weeks = ref<Week[]>([])
 const weekIsLoading = ref(false)
 const weekError = ref<string | null>(null)
 

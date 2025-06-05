@@ -5,6 +5,7 @@ import { Icon } from '@iconify/vue'
 import type { Task, Week, TimeEntry } from '../types'
 import { useTimeEntryStore } from '../stores/timeEntryStore'
 import { useTaskStore } from '../stores/taskStore'
+import { weeks } from '@/composables/useWeek'
 
 // Router setup
 const route = useRoute()
@@ -18,7 +19,6 @@ const taskStore = useTaskStore()
 const API_BASE_URL = 'http://localhost:3000'
 
 // Week management logic
-const weeks = ref<Week[]>([])
 const weekIsLoading = ref(false)
 const weekError = ref<string | null>(null)
 

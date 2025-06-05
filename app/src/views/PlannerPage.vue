@@ -7,6 +7,7 @@ import WeekFormModal from '../components/WeekFormModal.vue'
 import DeleteConfirmModal from '../components/DeleteConfirmModal.vue'
 import type { Task, Week } from '../types'
 import NewPlannerCardBody from '@/components/NewPlannerCardBody.vue'
+import { weeks } from '@/composables/useWeek'
 
 // Router setup
 const router = useRouter()
@@ -18,7 +19,6 @@ const taskStore = useTaskStore()
 const API_BASE_URL = 'http://localhost:3000'
 
 // Week management logic (simple local state without caching)
-const weeks = ref<Week[]>([])
 const weekIsLoading = ref(false)
 const weekError = ref<string | null>(null)
 
