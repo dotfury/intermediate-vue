@@ -1,19 +1,7 @@
 <script setup lang="ts">
-import { watch } from 'vue'
-import { ref } from 'vue'
+import { currentTheme, themes, useTheme } from '@/composables/useTheme'
 
-const themes = ['light', 'dark', 'emerald', 'corporate', 'synthwave', 'retro', 'cyberpunk']
-
-const currentTheme = ref('light')
-
-const setTheme = (theme: string) => {
-  currentTheme.value = theme
-  document.documentElement.setAttribute('data-theme', theme)
-}
-
-watch(currentTheme, () => {
-  setTheme(currentTheme.value)
-})
+useTheme()
 </script>
 
 <template>
@@ -26,11 +14,7 @@ watch(currentTheme, () => {
         <p class="mb-4">Choose your preferred theme</p>
 
         <div class="form-control">
-          <select
-            v-model="currentTheme"
-            @change="onThemeChange"
-            class="select select-bordered w-full max-w-xs"
-          >
+          <select v-model="currentTheme" class="select select-bordered w-full max-w-xs">
             <option v-for="theme in themes" :key="theme" :value="theme">
               {{ theme }}
             </option>

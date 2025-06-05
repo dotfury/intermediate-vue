@@ -4,10 +4,13 @@ import { Icon } from '@iconify/vue'
 
 import { computed } from 'vue'
 import BaseIcon from './components/BaseIcon.vue'
+import { useHotThemeKeys } from './composables/useHotkeys'
 
 const route = useRoute()
 
 const isHomePage = computed(() => route.path === '/')
+
+useHotThemeKeys()
 </script>
 
 <template>
