@@ -7,6 +7,8 @@ import { useTaskStore } from '../stores/taskStore'
 import type { Task, Week, TimeEntry } from '../types'
 import { weeks } from '@/composables/useWeek'
 
+import { formatDateRange } from '@/utils/datetime'
+
 // Use the time entries store
 const timeEntryStore = useTimeEntryStore()
 
@@ -242,13 +244,6 @@ const formatTime = (minutes: number) => {
   if (hours === 0) return `${mins} min`
   if (mins === 0) return `${hours}h`
   return `${hours}h ${mins}min`
-}
-
-// Format date range
-const formatDateRange = (startDate: string, endDate: string) => {
-  const start = new Date(startDate)
-  const end = new Date(endDate)
-  return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`
 }
 </script>
 

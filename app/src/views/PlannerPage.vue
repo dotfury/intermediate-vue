@@ -8,6 +8,7 @@ import DeleteConfirmModal from '../components/DeleteConfirmModal.vue'
 import type { Task, Week } from '../types'
 import NewPlannerCardBody from '@/components/NewPlannerCardBody.vue'
 import { weeks } from '@/composables/useWeek'
+import { formatDateRange } from '@/utils/datetime'
 
 // Router setup
 const router = useRouter()
@@ -238,13 +239,6 @@ const getWeekStatus = () => {
   if (completedTasks === totalTasks) return 'completed'
   if (completedTasks > 0) return 'in-progress'
   return 'not-started'
-}
-
-// Format date range
-const formatDateRange = (startDate: string, endDate: string) => {
-  const start = new Date(startDate)
-  const end = new Date(endDate)
-  return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`
 }
 </script>
 

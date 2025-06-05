@@ -6,6 +6,7 @@ import type { Task, Week, TimeEntry } from '../types'
 import { useTimeEntryStore } from '../stores/timeEntryStore'
 import { useTaskStore } from '../stores/taskStore'
 import { weeks } from '@/composables/useWeek'
+import { formatDateRange } from '@/utils/datetime'
 
 // Router setup
 const route = useRoute()
@@ -244,12 +245,6 @@ const formatTime = (minutes: number) => {
   if (hours === 0) return `${mins} min`
   if (mins === 0) return `${hours}h`
   return `${hours}h ${mins}min`
-}
-
-const formatDateRange = (startDate: string, endDate: string) => {
-  const start = new Date(startDate)
-  const end = new Date(endDate)
-  return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`
 }
 
 const formatDate = (dateStr: string) => {
