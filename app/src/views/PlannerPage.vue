@@ -6,6 +6,7 @@ import { useTaskStore } from '@/stores/taskStore'
 import WeekFormModal from '../components/WeekFormModal.vue'
 import DeleteConfirmModal from '../components/DeleteConfirmModal.vue'
 import type { Task, Week } from '../types'
+import NewPlannerCardBody from '@/components/NewPlannerCardBody.vue'
 
 // Router setup
 const router = useRouter()
@@ -570,6 +571,12 @@ const formatDateRange = (startDate: string, endDate: string) => {
               <span>No tasks planned</span>
             </div>
           </div>
+
+          <NewPlannerCardBody :taskList="selectedWeekTasks" :isExpanded="isTaskListExpanded">
+            <template #taskList="{ taskList }">
+              <pre>{{ taskList }}</pre>
+            </template>
+          </NewPlannerCardBody>
 
           <div v-if="selectedWeekTasks.length > 0" class="border-t border-base-300 pt-4">
             <div class="space-y-2">
