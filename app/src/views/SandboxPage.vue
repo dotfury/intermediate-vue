@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import SlotDemo from '@/components/SlotDemo.vue'
+import { useTemplateRef } from 'vue'
+
+const slotDemoRef = useTemplateRef('slotDemo')
+
+if (slotDemoRef) {
+  slotDemoRef.value?.currentCount
+  slotDemoRef.value?.closeModal()
+}
 </script>
 
 <template>
   <main>
     <h1>Sandbox Page</h1>
-    <SlotDemo>
+    <SlotDemo ref="slotDemo">
       <template v-slot:default="{ count }">
         <p>This is my cool {{ count }}!</p>
-      </template>
-      <template v-slot:footer>
-        <p>This is my footer content.</p>
       </template>
     </SlotDemo>
   </main>
