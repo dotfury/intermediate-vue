@@ -3,7 +3,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-defineProps({
+const props = defineProps({
   id: {
     type: String,
     required: true,
@@ -13,6 +13,9 @@ defineProps({
     required: true,
   },
 })
+
+const firstName = defineModel<string>('firstName')
+const lastName = defineModel<string>('lastName')
 </script>
 
 <template>
@@ -20,7 +23,8 @@ defineProps({
     <label class="label" :for="id">
       <span class="label-text font-medium">{{ label }}</span>
     </label>
-    <input :id="id" class="input input-bordered w-full" type="text" v-bind="$attrs" />
+    <input :id="id" v-model="firstName" class="input input-bordered w-full" type="text" />
+    <input :id="id" v-model="lastName" class="input input-bordered w-full" type="text" />
   </div>
 </template>
 
