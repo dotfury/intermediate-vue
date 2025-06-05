@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SlotDemo from '@/components/SlotDemo.vue'
+import { shallowRef } from 'vue'
 import { useTemplateRef } from 'vue'
 
 const slotDemoRef = useTemplateRef('slotDemo')

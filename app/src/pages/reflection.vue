@@ -5,7 +5,7 @@ import { Icon } from '@iconify/vue'
 import { useTimeEntryStore } from '../stores/timeEntryStore'
 import { useTaskStore } from '../stores/taskStore'
 import type { Task, Week, TimeEntry } from '../types'
-import { weeks } from '@/composables/useWeek'
+import { useWeekStore } from '@/composables/useWeek'
 
 import { formatDateRange } from '@/utils/datetime'
 
@@ -14,9 +14,7 @@ const timeEntryStore = useTimeEntryStore()
 
 // Use the centralized task store
 const taskStore = useTaskStore()
-
-// API base URL for weeks (keeping week logic local for now)
-const API_BASE_URL = 'http://localhost:3000'
+const weekStore = useWeekStore()
 
 // Use store for task management
 const tasks = computed(() => taskStore.tasks)
@@ -37,40 +35,16 @@ const weekError = ref<string | null>(null)
 
 // Computed properties
 const currentWeek = computed(() => {
-  return weeks.value.find((week) => week.isCurrentWeek) || null
+  return weekStore.weeks.value.find((week) => week.isCurrentWeek) || null
 })
 
-// Week actions
-const fetchWeeks = async () => {
-  weekIsLoading.value = true
-  weekError.value = null
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/weeks`)
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
-    const fetchedWeeks: Week[] = await response.json()
-    weeks.value = fetchedWeeks
-
-    return fetchedWeeks
-  } catch (err) {
-    weekError.value = err instanceof Error ? err.message : 'Failed to fetch weeks'
-    console.error('Error fetching weeks:', err)
-    throw err
-  } finally {
-    weekIsLoading.value = false
-  }
-}
-
 const getWeekById = (weekId: string) => {
-  return weeks.value.find((week) => week.id === weekId) || null
+  return weekStore.weeks.value.find((week) => week.id === weekId) || null
 }
 
 // Initialize data on component mount
 onMounted(async () => {
-  await Promise.all([fetchTasks(), fetchWeeks(), timeEntryStore.fetchTimeEntries()])
+  await Promise.all([fetchTasks(), weekStore.fetchWeeks(), timeEntryStore.fetchTimeEntries()])
 })
 
 // Loading state
@@ -83,7 +57,7 @@ const selectedWeekId = ref<string>('')
 
 // Initialize with current week or first week
 watch(
-  () => weeks.value,
+  () => weekStore.weeks.value,
   (newWeeks) => {
     if (newWeeks && newWeeks.length > 0 && !selectedWeekId.value) {
       const currentWeek = newWeeks.find((w: Week) => w.isCurrentWeek)
@@ -95,7 +69,7 @@ watch(
 
 // Get selected week data
 const selectedWeek = computed(() => {
-  return weeks.value?.find((w: Week) => w.id === selectedWeekId.value)
+  return weekStore.weeks.value?.find((w: Week) => w.id === selectedWeekId.value)
 })
 
 // Get tasks for selected week

@@ -8,6 +8,7 @@ import BaseModal from './BaseModal.vue'
 import type { Task, TaskStatus, TaskArea, Week } from '../types'
 import { onMounted } from 'vue'
 import BaseTextarea from './BaseTextarea.vue'
+import { useWeekStore } from '@/composables/useWeek'
 
 interface TaskFormData {
   title: string
@@ -24,13 +25,11 @@ const props = defineProps({
 
 // Use centralized task store
 const taskStore = useTaskStore()
+const weekStore = useWeekStore()
 
 // Internal modal state
 const isOpen = ref(false)
 const isLoading = ref(false)
-
-// API base URL for week operations
-const API_BASE_URL = 'http://localhost:3000'
 
 // Error state
 const error = ref<string | null>(null)
@@ -72,40 +71,13 @@ const updateTask = async (taskId: string, updates: Partial<Omit<Task, 'id' | 'cr
 
 // Week management logic (simple local state without caching)
 
-const weekIsLoading = ref(false)
-const weekError = ref<string | null>(null)
-
 // Computed properties
 const currentWeek = computed(() => {
-  return weeks.value.find((week) => week.isCurrentWeek) || null
+  return weekStore.weeks.value.find((week) => week.isCurrentWeek) || null
 })
 
-// Week actions
-const fetchWeeks = async () => {
-  weekIsLoading.value = true
-  weekError.value = null
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/weeks`)
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
-    const fetchedWeeks: Week[] = await response.json()
-    weeks.value = fetchedWeeks
-
-    return fetchedWeeks
-  } catch (err) {
-    weekError.value = err instanceof Error ? err.message : 'Failed to fetch weeks'
-    console.error('Error fetching weeks:', err)
-    throw err
-  } finally {
-    weekIsLoading.value = false
-  }
-}
-
 const getWeekById = (weekId: string) => {
-  return weeks.value.find((week) => week.id === weekId) || null
+  return weekStore.weeks.value.find((week) => week.id === weekId) || null
 }
 
 // Form data
@@ -244,7 +216,7 @@ defineExpose({
 })
 
 onMounted(async () => {
-  await fetchWeeks()
+  await weekStore.fetchWeeks()
 })
 </script>
 
