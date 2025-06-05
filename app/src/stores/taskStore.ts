@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
 import type { Task, TaskStatus, TaskFilters } from '../types'
+import { useStorage } from '@vueuse/core'
 
 const API_BASE_URL = 'http://localhost:3000'
 
 export const useTaskStore = defineStore('taskStore', {
   state: () => ({
-    tasks: [] as Task[],
+    tasks: useStorage<Task[]>('taskList', []),
     isLoading: false,
     error: null as string | null,
   }),
