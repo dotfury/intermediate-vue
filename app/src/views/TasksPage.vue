@@ -5,6 +5,8 @@ import DeleteConfirmModal from '@/components/DeleteConfirmModal.vue'
 import TaskFormModal from '@/components/TaskFormModal.vue'
 import TimeEntryFormModal from '@/components/TimeEntryFormModal.vue'
 
+import { filterTasks, formatTaskStatusLabel } from '@/composables/useTask'
+
 import { useTaskStore } from '@/stores/taskStore'
 import { useTimeEntryStore } from '@/stores/timeEntryStore'
 
@@ -56,16 +58,6 @@ const getWeekById = (weekId: string) => {
   return weeks.value.find((week) => week.id === weekId) || null
 }
 
-// Filter method (using taskStore)
-const filterTasks = (filters: {
-  weekId?: string
-  status?: TaskStatus | 'all'
-  area?: TaskArea | 'all'
-  searchTerm?: string
-}) => {
-  return taskStore.filterTasks(filters)
-}
-
 // Task functions
 const getStatusBadge = (status: string) => {
   switch (status) {
@@ -78,10 +70,6 @@ const getStatusBadge = (status: string) => {
     default:
       return 'badge-neutral'
   }
-}
-
-const formatStatus = (status: string) => {
-  return status.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase())
 }
 
 const formatTime = (minutes: number) => {
@@ -183,7 +171,7 @@ const expandedTimeEntries = ref<Set<string>>(new Set())
 
 // Filter tasks using inline method
 const filteredTasks = computed(() => {
-  return filterTasks({
+  return filterTasks(taskStore.tasks, {
     weekId: selectedWeek.value === 'all' ? undefined : selectedWeek.value,
     status: selectedStatus.value as TaskStatus | 'all',
     area: selectedArea.value as TaskArea | 'all',
@@ -390,7 +378,7 @@ const toggleTimeEntries = (taskId: string) => {
               {{ task.title }}
             </RouterLink>
             <div :class="['badge', getStatusBadge(task.status)]">
-              {{ formatStatus(task.status) }}
+              {{ formatTaskStatusLabel(task.status) }}
             </div>
           </div>
 
