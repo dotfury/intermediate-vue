@@ -3,9 +3,9 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import { useTaskStore } from '@/stores/taskStore'
-import WeekFormModal from '../components/WeekFormModal.vue'
-import DeleteConfirmModal from '../components/DeleteConfirmModal.vue'
-import type { Task, Week } from '../types'
+import WeekFormModal from '@/components/WeekFormModal.vue'
+import DeleteConfirmModal from '@/components/DeleteConfirmModal.vue'
+import type { Task, Week } from '@/types'
 import NewPlannerCardBody from '@/components/NewPlannerCardBody.vue'
 import { weeks } from '@/composables/useWeek'
 import { formatDateRange } from '@/utils/datetime'
@@ -565,12 +565,6 @@ const getWeekStatus = () => {
               <span>No tasks planned</span>
             </div>
           </div>
-
-          <NewPlannerCardBody :taskList="selectedWeekTasks" :isExpanded="isTaskListExpanded">
-            <template #taskList="{ taskList }">
-              <pre>{{ taskList }}</pre>
-            </template>
-          </NewPlannerCardBody>
 
           <div v-if="selectedWeekTasks.length > 0" class="border-t border-base-300 pt-4">
             <div class="space-y-2">

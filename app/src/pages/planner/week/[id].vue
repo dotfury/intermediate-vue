@@ -2,9 +2,9 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
-import type { Task, Week, TimeEntry } from '../types'
-import { useTimeEntryStore } from '../stores/timeEntryStore'
-import { useTaskStore } from '../stores/taskStore'
+import type { Task, Week, TimeEntry } from '@/types'
+import { useTimeEntryStore } from '@/stores/timeEntryStore'
+import { useTaskStore } from '@/stores/taskStore'
 import { weeks } from '@/composables/useWeek'
 import { formatDateRange } from '@/utils/datetime'
 
