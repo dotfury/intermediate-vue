@@ -28,6 +28,10 @@ export const routes = [
     component: () => import('../views/SettingsPage.vue'),
   },
   {
+    path: '/sandbox',
+    component: () => import('../views/SandboxPage.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFoundPage.vue'),
