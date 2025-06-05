@@ -33,7 +33,7 @@ const customIcon = computed(() => {
 
 <template>
   <Icon v-if="source === 'iconify'" :icon="name" :width="width" :height="height" />
-  <component v-else :is="customIcon" />
+  <component v-else :is="customIcon" :width="width" :height="height" />
 </template>
 
 <style scoped></style>
