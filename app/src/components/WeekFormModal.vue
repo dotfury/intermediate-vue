@@ -3,6 +3,7 @@ import { ref, computed, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import BaseModal from './BaseModal.vue'
 import type { Week } from '../types'
+import BaseTextarea from './BaseTextarea.vue'
 
 // API base URL
 const API_BASE_URL = 'http://localhost:3000'
@@ -288,19 +289,13 @@ defineExpose({
       </div>
 
       <!-- Description -->
-      <div class="form-control">
-        <label class="label" for="week-description">
-          <span class="label-text font-medium">Description</span>
-        </label>
-        <textarea
-          id="week-description"
-          v-model="weekForm.description"
-          class="textarea textarea-bordered w-full"
-          rows="3"
-          placeholder="Add goals, notes, or themes for this week..."
-          :disabled="isLoading"
-        ></textarea>
-      </div>
+      <BaseTextarea
+        id="week-description"
+        v-model="weekForm.description"
+        label="Description"
+        placeholder="Add goals, notes, or themes for this week..."
+        :disabled="isLoading"
+      />
     </form>
 
     <template #actions>
