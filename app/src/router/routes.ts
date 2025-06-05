@@ -1,17 +1,5 @@
 export const routes = [
   {
-    path: '/',
-    component: () => import('../views/HomePage.vue'),
-  },
-  {
-    path: '/tasks',
-    component: () => import('../views/TasksPage.vue'),
-  },
-  {
-    path: '/tasks/:id',
-    component: () => import('../views/TaskDetailPage.vue'),
-  },
-  {
     path: '/planner',
     component: () => import('../views/PlannerPage.vue'),
   },
@@ -37,3 +25,7 @@ export const routes = [
     component: () => import('../views/NotFoundPage.vue'),
   },
 ]
+
+/**
+ * domain.com/product/:id/product-detail
+ */
