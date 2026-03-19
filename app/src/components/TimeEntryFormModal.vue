@@ -5,6 +5,7 @@ import BaseModal from './BaseModal.vue'
 
 import { useTimeEntryStore } from '../stores/timeEntryStore'
 import type { TimeEntry } from '../types'
+import BaseTextArea from './BaseTextArea.vue'
 
 // Define props and emits
 interface Props {
@@ -270,19 +271,14 @@ watch(
       </div>
 
       <!-- Notes -->
-      <div class="form-control">
-        <label class="label" for="notes">
-          <span class="label-text font-medium">Notes</span>
-        </label>
-        <textarea
-          id="notes"
-          v-model="timeEntryForm.notes"
-          class="textarea textarea-bordered w-full"
-          rows="3"
-          placeholder="Add any notes about this time entry..."
-          :disabled="timeEntryStore.isLoading"
-        ></textarea>
-      </div>
+      <BaseTextArea
+        id="notes"
+        label="Notes"
+        v-model="timeEntryForm.notes"
+        class="textarea textarea-bordered w-full"
+        placeholder="Add any notes about this time entry..."
+        :disabled="timeEntryStore.isLoading"
+      />
     </form>
 
     <!-- Actions -->

@@ -288,19 +288,14 @@ defineExpose({
       </div>
 
       <!-- Description -->
-      <div class="form-control">
-        <label class="label" for="week-description">
-          <span class="label-text font-medium">Description</span>
-        </label>
-        <textarea
-          id="week-description"
-          v-model="weekForm.description"
-          class="textarea textarea-bordered w-full"
-          rows="3"
-          placeholder="Add goals, notes, or themes for this week..."
-          :disabled="isLoading"
-        ></textarea>
-      </div>
+      <BaseTextArea
+        id="week-description"
+        label="Week Description"
+        v-model="weekForm.description"
+        class="textarea textarea-bordered w-full"
+        placeholder="Add goals, notes, or themes for this week..."
+        :disabled="isLoading"
+      />
     </form>
 
     <template #actions>

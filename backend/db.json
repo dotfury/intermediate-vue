@@ -220,6 +220,20 @@
       "status": "not_started",
       "createdAt": "2025-05-26T11:00:00.000Z",
       "updatedAt": "2025-05-26T11:00:00.000Z"
+    },
+    {
+      "title": "me",
+      "description": "hello",
+      "weekId": "2025-W21",
+      "areas": [
+        "work"
+      ],
+      "estimatedMinutes": 60,
+      "status": "not_started",
+      "id": "task-1773892465736",
+      "actualMinutes": 0,
+      "createdAt": "2026-03-19T03:54:25.736Z",
+      "updatedAt": "2026-03-19T03:54:25.736Z"
     }
   ],
   "timeEntries": [
@@ -256,11 +270,11 @@
     {
       "id": "entry-4",
       "taskId": "task-3",
-      "startTime": "2025-05-16T10:00:00.000Z",
-      "endTime": "2025-05-16T14:40:00.000Z",
-      "minutes": 280,
+      "startTime": "2026-03-18T18:01:00.000Z",
+      "endTime": "2026-03-18T19:01:00.000Z",
+      "minutes": 60,
       "isManual": false,
-      "notes": "Implementation and stakeholder review session",
+      "notes": "testing",
       "createdAt": "2025-05-16T10:00:00.000Z"
     },
     {

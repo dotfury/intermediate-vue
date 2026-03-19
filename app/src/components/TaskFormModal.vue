@@ -7,6 +7,7 @@ import BaseModal from './BaseModal.vue'
 
 import type { Task, TaskStatus, TaskArea, Week } from '../types'
 import { onMounted } from 'vue'
+import BaseTextArea from './BaseTextArea.vue'
 
 interface TaskFormData {
   title: string
@@ -274,20 +275,13 @@ onMounted(async () => {
       </div>
 
       <!-- Description -->
-      <div class="form-control">
-        <label class="label" for="task-description">
-          <span class="label-text font-medium">Description</span>
-        </label>
-        <textarea
-          id="task-description"
-          v-model="taskForm.description"
-          class="textarea textarea-bordered w-full"
-          rows="3"
-          placeholder="Describe your task..."
-          :disabled="isLoading"
-        ></textarea>
-      </div>
-
+      <BaseTextArea
+        id="task-description"
+        label="Description"
+        placeholder="Describe your taskzzz..."
+        v-model="taskForm.description"
+        :disabled="isLoading"
+      />
       <!-- Week Selection -->
       <div class="form-control">
         <label class="label" for="task-week">
